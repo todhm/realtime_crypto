@@ -1,0 +1,3 @@
+curl localhost:9200
+conda create --name rtcenv
+source activate rtcenv
