@@ -25,7 +25,7 @@ class gemini_websocket(object):
     def create_producer(self, bootstrap_servers): 
         return KafkaProducer(bootstrap_servers=bootstrap_servers)
     
-    def on_message(self, ws, message):
+    def on_message(self,  message):
         message = json.loads(message)
         if message['type'] == 'update':
             for i in message['events']:
@@ -34,13 +34,13 @@ class gemini_websocket(object):
                     payload = {'side': i['side'], 'price': i['price'], 'remaining': i['remaining']}
                     sent = self.producer.send('gemini-feed', bytes(json.dumps(payload), 'utf-8'))
 
-    def on_error(self, ws, error):
+    def on_error(self,  error):
         print('Error {0}, {1}'.format(error, datetime.datetime.now()))
 
-    def on_close(self, ws):
+    def on_close(self):
         print('Closed, {}'.format(datetime.datetime.now()))
 
-    def on_open(self, ws):
+    def on_open(self):
         print('Opened, {}'.format(datetime.datetime.now()))
 
     def run_websocket(self):
@@ -51,7 +51,7 @@ class gemini_websocket(object):
                                     on_error=self.on_error
                                     )
 
-        ws.run_forever(ping_interval=5)  
+        ws.run_forever()  
 
 gem = gemini_websocket(['kafka-node:9092'])
 gem.run_websocket()
