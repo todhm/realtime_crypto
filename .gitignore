@@ -1,1 +1,6 @@
 bitcoin-historical-data
+*.pyc
+*.cache
+.local
+.ipython
+volumes
