@@ -4,3 +4,4 @@ bitcoin-historical-data
 .local
 .ipython
 volumes
+secret.py
